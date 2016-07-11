@@ -23,9 +23,9 @@ public class Controlador
         this.m = m;
     }
 
-    public void añadirOportunidad(String ciudad, String pais, String descripcion, File ficheroImagen, String programa, String localizacion, int numero) throws IOException
+    public void añadirOportunidad(String ciudad, String pais, String descripcion, String url, File ficheroImagen, String programa, String localizacion, int numero) throws IOException
     {
-        m.añadirOportunidad(ciudad, pais, descripcion, ficheroImagen, programa, localizacion, numero);
+        m.añadirOportunidad(ciudad, pais, descripcion, url, ficheroImagen, programa, localizacion, numero);
     }
     
 }

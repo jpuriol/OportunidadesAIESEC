@@ -17,9 +17,9 @@ public class Modelo
         this.oportunidades = new ArrayList<>();
     }
     
-    public void añadirOportunidad (String ciudad, String pais, String descripcion, File ficheroImagen, String programa, String localizacion, int numero) throws IOException
+    public void añadirOportunidad (String ciudad, String pais, String descripcion, String url, File ficheroImagen, String programa, String localizacion, int numero) throws IOException
     {
-        Oportunidad op = new Oportunidad (ciudad, pais, descripcion, ficheroImagen, programa, localizacion, numero);
+        Oportunidad op = new Oportunidad (ciudad, pais, descripcion, url, ficheroImagen, programa, localizacion, numero);
         op.crearHtml();
         
         oportunidades.add(op);

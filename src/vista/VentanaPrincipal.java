@@ -23,6 +23,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
         this.controlador = controlador;
         ventanaExterna = new JFrame();
         initComponents();
+        pack();
     }
 
     /**
@@ -42,7 +43,7 @@ public class VentanaPrincipal extends javax.swing.JFrame
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Ventana Principal");
+        setTitle("VentanaPrincipal");
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton1.setText("Crear Oportunidad");
@@ -56,7 +57,6 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         jButton2.setText("Gestionar Oportunidades");
         jButton2.setDoubleBuffered(true);
-        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -110,7 +110,9 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
     {//GEN-HEADEREND:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        ventanaExterna.dispose();
+        ventanaExterna = new GestorOportunidades (controlador);
+        ventanaExterna.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed

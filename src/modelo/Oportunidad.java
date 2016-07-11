@@ -28,16 +28,18 @@ public class Oportunidad
     private String ciudad;
     private String pais;
     private String descripcion; //<-------¡FALTA USARLO!
+    private String url; //<-------¡FALTA USARLO!
     private String programa;
     private String localizacion;
     private int numero;
     private File ficheroImagen;
 
-    public Oportunidad(String ciudad, String pais, String descripcion, File ficheroImagen, String programa, String zonaMundo, int numero)
+    public Oportunidad(String ciudad, String pais, String descripcion, String url, File ficheroImagen, String programa, String zonaMundo, int numero)
     {
         this.ciudad = ciudad;
         this.pais = pais;
         this.descripcion = descripcion;
+        this.url = url;
         this.ficheroImagen = ficheroImagen;
         this.programa = programa;
         this.localizacion = zonaMundo;
