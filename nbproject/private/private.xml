@@ -3,8 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/vista/CrearOportunidad.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/modelo/ExcepcionZona.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/modelo/ContenedorOportunidades.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/iniciar/OportunidadesAIESEC.java</file>
             <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/vista/VentanaPrincipal.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/controlador/Controlador.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/modelo/ContenedorPrograma.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/vista/GestorOportunidades.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/vista/CrearOportunidad.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/vista/CargarImagen.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/modelo/Datos.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/modelo/ExcepcionPrograma.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/modelo/ExcepcionNumero.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/modelo/ContenedorZona.java</file>
+            <file>file:/C:/Users/admin/Documents/NetBeansProjects/OportunidadesAIESEC/src/datos.xml</file>
         </group>
     </open-files>
 </project-private>

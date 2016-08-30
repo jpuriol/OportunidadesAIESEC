@@ -8,7 +8,14 @@ package controlador;
 
 import java.io.File;
 import java.io.IOException;
-import modelo.Modelo;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import modelo.ContenedorOportunidades;
+import modelo.ExcepcionNumero;
+import modelo.ExcepcionPrograma;
+import modelo.ExcepcionZona;
 
 /**
  *
@@ -16,16 +23,20 @@ import modelo.Modelo;
  */
 public class Controlador 
 {
-    Modelo m;
+    ContenedorOportunidades m;
 
-    public Controlador(Modelo m)
+    public Controlador(ContenedorOportunidades m)
     {
         this.m = m;
     }
 
-    public void añadirOportunidad(String ciudad, String pais, String descripcion, String url, File ficheroImagen, String programa, String localizacion, int numero) throws IOException
+    public void añadirOportunidad(String ciudad, String pais, String descripcion, String url, File ficheroImagen, int programa, int zona, int numero) throws IOException, ExcepcionNumero, ExcepcionPrograma, ExcepcionZona
     {
-        m.añadirOportunidad(ciudad, pais, descripcion, url, ficheroImagen, programa, localizacion, numero);
+        m.añadirOportunidad(ciudad, pais, descripcion, url, ficheroImagen, programa, zona, numero);
     }
     
+    public ArrayList dameOportunidades (int programa, int zona)
+    {
+        return m.dameOportunidades(zona, programa);
+    }
 }

@@ -7,15 +7,15 @@
 package modelo;
 
 /**
- *
- * Excepción que indica que se ha introducido un número no válido de PROGRAMA [global talent, etc]
+ * Excepción que indica que se ha introducido un número no válido de ZONA [del mundo]
  * 
  * @author jpuriol
  */
-public class ExcepcionPrograma extends Exception
+public class ExcepcionZona extends Exception
 {
-    public ExcepcionPrograma(String mensaje)
+
+    public ExcepcionZona(String message)
     {
-        super(mensaje);
+        super(message);
     }
 }

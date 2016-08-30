@@ -6,7 +6,8 @@
 package iniciar;
 
 import controlador.Controlador;
-import modelo.Modelo;
+import modelo.Datos;
+import modelo.ContenedorOportunidades;
 import vista.VentanaPrincipal;
 
 /**
@@ -21,9 +22,10 @@ public class OportunidadesAIESEC
      */
     public static void main(String[] args)
     {
-        Modelo m = new Modelo();
+        Datos datos = new Datos();
+        ContenedorOportunidades m = datos.cargar();
         Controlador c = new Controlador (m);
-        VentanaPrincipal v = new VentanaPrincipal (c);
+        VentanaPrincipal v = new VentanaPrincipal (c, datos);
         v.setVisible(true);
     }
     

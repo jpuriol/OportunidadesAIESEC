@@ -7,6 +7,7 @@ package vista;
 
 import javax.swing.JFrame;
 import controlador.Controlador;
+import modelo.Datos;
 
 /**
  *
@@ -18,10 +19,10 @@ public class VentanaPrincipal extends javax.swing.JFrame
     /**
      * Creates new form VentanaPrincipal
      */
-    public VentanaPrincipal(Controlador controlador)
+    public VentanaPrincipal(Controlador controlador, Datos datos)
     {
         this.controlador = controlador;
-        ventanaExterna = new JFrame();
+        this.datos = datos;
         initComponents();
         pack();
     }
@@ -44,6 +45,13 @@ public class VentanaPrincipal extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VentanaPrincipal");
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jButton1.setText("Crear Oportunidad");
@@ -106,21 +114,27 @@ public class VentanaPrincipal extends javax.swing.JFrame
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
     {//GEN-HEADEREND:event_jButton2ActionPerformed
-        ventanaExterna.dispose();
-        ventanaExterna = new GestorOportunidades (controlador);
+        ventanaExterna = new GestorOportunidades (controlador, datos);
         ventanaExterna.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        ventanaExterna.dispose();
-        ventanaExterna = new CrearOportunidad (controlador);
+        ventanaExterna = new CrearOportunidad (controlador, datos);
         ventanaExterna.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosed
+    {//GEN-HEADEREND:event_formWindowClosed
+        datos.volcar();
+    }//GEN-LAST:event_formWindowClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -132,4 +146,5 @@ public class VentanaPrincipal extends javax.swing.JFrame
     // End of variables declaration//GEN-END:variables
     private Controlador controlador;
     private JFrame ventanaExterna;
+    private Datos datos;
 }

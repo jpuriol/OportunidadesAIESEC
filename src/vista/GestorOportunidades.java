@@ -6,6 +6,14 @@
 package vista;
 
 import controlador.Controlador;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import modelo.ContenedorOportunidades;
+import modelo.ContenedorPrograma;
+import modelo.Datos;
+import modelo.Oportunidad;
 
 /**
  *
@@ -17,9 +25,11 @@ public class GestorOportunidades extends javax.swing.JFrame
     /**
      * Creates new form GestorOportunidades
      */
-    public GestorOportunidades(Controlador controlador)
+    public GestorOportunidades(Controlador controlador, Datos datos)
     {
         this.controlador = controlador;
+        this.modeloLista = new DefaultListModel();
+        this.datos = datos;
         initComponents();
         pack();
     }
@@ -36,15 +46,22 @@ public class GestorOportunidades extends javax.swing.JFrame
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        comboBoxPrograma = new javax.swing.JComboBox<>();
+        comboBoxZona = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GestorOportunidades");
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel1.setText("Programa:");
@@ -52,26 +69,36 @@ public class GestorOportunidades extends javax.swing.JFrame
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel2.setText("Zona del mundo:");
 
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Global Talent", "Global Entrepeneur", "Globla Citizen" }));
+        comboBoxPrograma.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        comboBoxPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Global Talent", "Global Entrepeneur", "Globla Citizen" }));
 
-        jComboBox2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "África", "Oriente Medio y Norte de África", "Centro y Este de Europa", "Asía-Pacífico", "Europa Occidental y América del Norte", "Latinoamérica" }));
+        comboBoxZona.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        comboBoxZona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "África", "Oriente Medio y Norte de África", "Centro y Este de Europa", "Asía-Pacífico", "Europa Occidental y América del Norte", "Latinoamérica" }));
 
         jList1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jList1.setModel(new javax.swing.AbstractListModel<String>()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(modeloLista
+        );
         jScrollPane1.setViewportView(jList1);
 
         jButton1.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
         jButton1.setText("Buscar Oportunidades");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
         jButton2.setText("Modificar Oportunidad");
+        jButton2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,11 +113,11 @@ public class GestorOportunidades extends javax.swing.JFrame
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboBoxPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(comboBoxZona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton2)
                             .addComponent(jButton1))
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -102,8 +129,8 @@ public class GestorOportunidades extends javax.swing.JFrame
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxPrograma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxZona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(27, 27, 27)
                 .addComponent(jButton1)
@@ -115,17 +142,100 @@ public class GestorOportunidades extends javax.swing.JFrame
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        modeloLista.removeAllElements();
+        
+        int programa;
+        switch (comboBoxPrograma.getSelectedIndex())
+        {
+            case 0:
+                programa = ContenedorOportunidades.GLOBAL_TALENT;
+                break;
+            case 1:
+                programa = ContenedorOportunidades.GLOBAL_ENTREPENEUR;
+                break;
+            case 2:
+                programa = ContenedorOportunidades.GLOBAL_CITIZEN;
+                break;
+            default:
+                programa = -1;
+                break;
+        }
+        
+        int zona;
+        switch (comboBoxZona.getSelectedIndex())
+        {
+            case 0:
+                zona = ContenedorPrograma.AFRICA;
+                break;
+            case 1:
+                zona = ContenedorPrograma.ORIENTE_MEDIO_NORTE_AFRICA;
+                break;
+            case 2:
+                zona = ContenedorPrograma.CENTRO_ESTE_EUROPA;
+                break;
+            case 3:
+                zona = ContenedorPrograma.ASIA_PACIFICO;
+                break;
+            case 4:
+                zona = ContenedorPrograma.EUROPA_OCCIDENTAL_AMERICA_NORTE;
+                break;
+            case 5:
+                zona = ContenedorPrograma.LATINOAMERICA;
+                break;
+            default:
+                zona = -1;
+                break;
+        }
+        
+        ArrayList res = controlador.dameOportunidades(programa, zona);
+        
+        if (res == null || res.isEmpty())
+            JOptionPane.showMessageDialog(rootPane, "No se han creado oportunides con estos filtros");
+        else
+        {
+            for (Object o : res)
+                modeloLista.addElement(o);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
+    {//GEN-HEADEREND:event_jButton2ActionPerformed
+        int i = jList1.getSelectedIndex();
+        if (i == -1)
+            JOptionPane.showMessageDialog(rootPane, "Seleccione una oportuniadad para modificar por favor");
+        else
+        {
+            Oportunidad op = (Oportunidad) modeloLista.getElementAt(i); //burrada máxima según la Ingeniería del Software!!!
+            this.dispose();
+            ventanaExterna = new CrearOportunidad (controlador, datos, op.getCiudad(), op.getPais(), op.getDescripcion(), op.getUrl(), op.getPrograma(), op.getFicheroImagen(), op.getZona(), op.getNumero());
+            ventanaExterna.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
+    {//GEN-HEADEREND:event_formWindowClosing
+        this.dispose();
+        ventanaExterna = new VentanaPrincipal (controlador, datos);
+        ventanaExterna.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboBoxPrograma;
+    private javax.swing.JComboBox<String> comboBoxZona;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
     private Controlador controlador;
+    private DefaultListModel modeloLista;
+    private JFrame ventanaExterna;
+    private Datos datos;
 }

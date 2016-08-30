@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<contenedorOp>
+  <oportunidades>
+    <contendorPro>
+      <zonas>
+        <null/>
+        <null/>
+        <contenedorZo>
+          <oportunidades>
+            <op>
+              <ciudad>Valencia</ciudad>
+              <pais>España</pais>
+              <descripcion>La mejor op</descripcion>
+              <url>jpuriol.es</url>
+              <programa>0</programa>
+              <zona>2</zona>
+              <numero>0</numero>
+              <ficheroImagen>C:\Users\admin\Pictures\Fotos Ines\IMG_20160410_193401.jpg</ficheroImagen>
+            </op>
+            <null/>
+          </oportunidades>
+        </contenedorZo>
+        <null/>
+        <null/>
+        <null/>
+      </zonas>
+    </contendorPro>
+    <null/>
+    <null/>
+  </oportunidades>
+</contenedorOp>

@@ -8,7 +8,16 @@ package vista;
 import controlador.Controlador;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import modelo.ContenedorOportunidades;
+import modelo.ContenedorPrograma;
+import modelo.Datos;
+import modelo.ExcepcionNumero;
+import modelo.ExcepcionPrograma;
+import modelo.ExcepcionZona;
 
 /**
  *
@@ -21,12 +30,45 @@ public class CrearOportunidad extends javax.swing.JFrame
      * Creates new form Vista
      * @param controlador
      */
-    public CrearOportunidad(Controlador controlador)
+    public CrearOportunidad(Controlador controlador, Datos datos)
     {
         this.controlador = controlador;
+        this.datos = datos;
         cargarImagen = new CargarImagen();
         initComponents();
-        pack();
+    }
+    
+    /**
+     * Contructor con argumetos hecho para modificar las oportunidades
+     * @param controlador
+     * @param ciudad 
+     * @param pais 
+     * @param descripcion 
+     * @param enlace 
+     * @param programa 
+     * @param zona 
+     * @param numero 
+     */
+    public CrearOportunidad(Controlador controlador, Datos datos, String ciudad, String pais, String descripcion, String enlace, int programa, File ficheroImagen, int zona, int numero)
+    {
+        initComponents();
+        cargarImagen = new CargarImagen();
+        
+        this.controlador = controlador;
+        this.datos = datos;
+        
+        textoCiudad.setText(ciudad);
+        textoPais.setText(pais);
+        textoDescripcion.setText(descripcion);
+        textoEnlace.setText(enlace);
+        comboBoxPrograma.setSelectedIndex(programa);
+        comboBoxZona.setSelectedIndex(zona);
+        this.ficheroImagen = ficheroImagen;
+        
+        if (numero == 0)
+            jRadioButton0.setSelected(true);
+        else if (numero == 1)
+            jRadioButton1.setSelected(true);
     }
 
     /**
@@ -47,11 +89,11 @@ public class CrearOportunidad extends javax.swing.JFrame
         textoPais = new javax.swing.JTextField();
         botonCrearHTML = new javax.swing.JButton();
         comboBoxPrograma = new javax.swing.JComboBox<>();
-        comboBoxLocalizacion = new javax.swing.JComboBox<>();
+        comboBoxZona = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jRadioButton0 = new javax.swing.JRadioButton();
         jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
         jToggleButton1 = new javax.swing.JToggleButton();
         textoEnlace = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -59,6 +101,13 @@ public class CrearOportunidad extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CrearOportunidad");
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
+                formWindowClosed(evt);
+            }
+        });
 
         textoCiudad.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
 
@@ -72,13 +121,6 @@ public class CrearOportunidad extends javax.swing.JFrame
         jLabel3.setText("Descripción:");
 
         textoPais.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        textoPais.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                textoPaisActionPerformed(evt);
-            }
-        });
 
         botonCrearHTML.setFont(new java.awt.Font("Arial", 3, 12)); // NOI18N
         botonCrearHTML.setText("¡CREAR HTML!");
@@ -94,9 +136,9 @@ public class CrearOportunidad extends javax.swing.JFrame
         comboBoxPrograma.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         comboBoxPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Global Talent", "Global Entrepeneur", "Globla Citizen" }));
 
-        comboBoxLocalizacion.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        comboBoxLocalizacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "África", "Oriente Medio y Norte de África", "Centro y Este de Europa", "Asía-Pacífico", "Europa Occidental y América del Norte", "Latinoamérica" }));
-        comboBoxLocalizacion.setToolTipText("");
+        comboBoxZona.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        comboBoxZona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "África", "Oriente Medio y Norte de África", "Centro y Este de Europa", "Asía-Pacífico", "Europa Occidental y América del Norte", "Latinoamérica" }));
+        comboBoxZona.setToolTipText("");
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("Programa:");
@@ -104,21 +146,14 @@ public class CrearOportunidad extends javax.swing.JFrame
         jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel5.setText("Zona del mundo:");
 
+        buttonGroup1.add(jRadioButton0);
+        jRadioButton0.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jRadioButton0.setSelected(true);
+        jRadioButton0.setText("Oportunidad 0");
+
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jRadioButton1.setSelected(true);
         jRadioButton1.setText("Oportunidad 1");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jRadioButton2.setText("Oportunidad 2");
 
         jToggleButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jToggleButton1.setText("Seleccionar Imagen");
@@ -131,25 +166,11 @@ public class CrearOportunidad extends javax.swing.JFrame
         });
 
         textoEnlace.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        textoEnlace.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                textoEnlaceActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel6.setText("Enlace:");
 
         textoDescripcion.setFont(new java.awt.Font("Monospaced", 0, 12)); // NOI18N
-        textoDescripcion.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                textoDescripcionActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,9 +201,9 @@ public class CrearOportunidad extends javax.swing.JFrame
                                 .addGap(18, 18, 18)
                                 .addComponent(botonCrearHTML))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
+                                .addComponent(jRadioButton0)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButton2))
+                                .addComponent(jRadioButton1))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(jLabel4)
@@ -191,7 +212,7 @@ public class CrearOportunidad extends javax.swing.JFrame
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(jLabel5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(comboBoxLocalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(comboBoxZona, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 7, Short.MAX_VALUE)
@@ -226,11 +247,11 @@ public class CrearOportunidad extends javax.swing.JFrame
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(comboBoxLocalizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxZona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1))
+                    .addComponent(jRadioButton1)
+                    .addComponent(jRadioButton0))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botonCrearHTML)
@@ -242,72 +263,71 @@ public class CrearOportunidad extends javax.swing.JFrame
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textoPaisActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textoPaisActionPerformed
-    {//GEN-HEADEREND:event_textoPaisActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoPaisActionPerformed
-
     private void botonCrearHTMLActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_botonCrearHTMLActionPerformed
     {//GEN-HEADEREND:event_botonCrearHTMLActionPerformed
-        String programa;
+        int programa;
         switch (comboBoxPrograma.getSelectedIndex())
         {
             case 0:
-                programa = "gt";
+                programa = ContenedorOportunidades.GLOBAL_TALENT;
                 break;
             case 1:
-                programa = "ge";
+                programa = ContenedorOportunidades.GLOBAL_ENTREPENEUR;
                 break;
             case 2:
-                programa = "gc";
+                programa = ContenedorOportunidades.GLOBAL_CITIZEN;
                 break;
             default:
-                programa = "error";
+                programa = -1;
                 break;
         }
         
-        String localizacion;
-        switch (comboBoxLocalizacion.getSelectedIndex())
+        int zona;
+        switch (comboBoxZona.getSelectedIndex())
         {
             case 0:
-                localizacion = "a";
+                zona = ContenedorPrograma.AFRICA;
                 break;
             case 1:
-                localizacion = "om-na";
+                zona = ContenedorPrograma.ORIENTE_MEDIO_NORTE_AFRICA;
                 break;
             case 2:
-                localizacion = "c-e-e";
+                zona = ContenedorPrograma.CENTRO_ESTE_EUROPA;
                 break;
             case 3:
-                localizacion = "ap";
+                zona = ContenedorPrograma.ASIA_PACIFICO;
                 break;
             case 4:
-                localizacion = "eo-an";
+                zona = ContenedorPrograma.EUROPA_OCCIDENTAL_AMERICA_NORTE;
                 break;
             case 5:
-                localizacion = "lt";
+                zona = ContenedorPrograma.LATINOAMERICA;
                 break;
             default:
-                localizacion = "error";
+                zona = -1;
                 break;
         }
         
         int numero;
         
-        if (jRadioButton1.isSelected())
+        if (jRadioButton0.isSelected())
+            numero = 0;
+        else if (jRadioButton1.isSelected())
             numero = 1;
-        else if (jRadioButton2.isSelected())
-            numero = 2;
         else
-            numero = -1734830; //número que indica error
+            numero = -1; //número que indica error
         try
         {
-            controlador.añadirOportunidad(textoCiudad.getText(), textoPais.getText(), textoDescripcion.getText(), textoEnlace.getText(), ficheroImagen, programa, localizacion, numero);
-            JOptionPane.showMessageDialog(cargarImagen, "¡Oportunidad creada!");
+            controlador.añadirOportunidad(textoCiudad.getText(), textoPais.getText(), textoDescripcion.getText(), textoEnlace.getText(), ficheroImagen, programa, zona, numero);
+            JOptionPane.showMessageDialog(cargarImagen, "Operación terminada con éxito");
             this.dispose();
+            ventanaExterna = new VentanaPrincipal (controlador, datos);
         } catch (IOException ex)
         {
             JOptionPane.showMessageDialog(cargarImagen, "Error copiando imagen.");
+        } catch (ExcepcionNumero | ExcepcionPrograma | ExcepcionZona ex)
+        {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_botonCrearHTMLActionPerformed
 
@@ -317,35 +337,28 @@ public class CrearOportunidad extends javax.swing.JFrame
         botonCrearHTML.setEnabled(true);
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioButton1ActionPerformed
-    {//GEN-HEADEREND:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    private void textoEnlaceActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textoEnlaceActionPerformed
-    {//GEN-HEADEREND:event_textoEnlaceActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoEnlaceActionPerformed
-
-    private void textoDescripcionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_textoDescripcionActionPerformed
-    {//GEN-HEADEREND:event_textoDescripcionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textoDescripcionActionPerformed
+    private void formWindowClosed(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosed
+    {//GEN-HEADEREND:event_formWindowClosed
+        
+        this.dispose();
+        ventanaExterna = new VentanaPrincipal (controlador, datos);
+        ventanaExterna.setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCrearHTML;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> comboBoxLocalizacion;
     private javax.swing.JComboBox<String> comboBoxPrograma;
+    private javax.swing.JComboBox<String> comboBoxZona;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JRadioButton jRadioButton0;
     private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField textoCiudad;
     private javax.swing.JTextField textoDescripcion;
@@ -355,4 +368,6 @@ public class CrearOportunidad extends javax.swing.JFrame
     private Controlador controlador;
     private File ficheroImagen;
     private CargarImagen cargarImagen;
+    private JFrame ventanaExterna;
+    private Datos datos;
 }
